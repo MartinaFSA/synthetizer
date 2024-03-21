@@ -1,0 +1,32 @@
+{
+    "drums": {
+        "name": "drums",
+        "audios": [
+            {"isActive": false, "fileName": "", "id":"drums1"},
+            {"isActive": false, "fileName": "", "id":"drums2"},
+            {"isActive": false, "fileName": "", "id":"drums3"},
+            {"isActive": false, "fileName": "", "id":"drums4"}
+        ],
+        "isActive": false
+    },
+    "guitar": {
+        "name": "guitar",
+        "audios": [
+            {"isActive": false, "fileName": "", "id":"guitar1"},
+            {"isActive": false, "fileName": "", "id":"guitar2"},
+            {"isActive": false, "fileName": "", "id":"guitar3"},
+            {"isActive": false, "fileName": "", "id":"guitar4"}
+        ],
+        "isActive": false
+    },
+    "singer": {
+        "name": "singer",
+        "audios": [
+            {"isActive": false, "fileName": "", "id":"singer1"},
+            {"isActive": false, "fileName": "", "id":"singer2"},
+            {"isActive": false, "fileName": "", "id":"singer3"},
+            {"isActive": false, "fileName": "", "id":"singer4"}
+        ],
+        "isActive": false
+    }
+}
