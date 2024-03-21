@@ -1,41 +1,7 @@
-# Sinthetizer
+# Synthetizer games
+This project contains a retro-style game inspired in bitcrushed music. Beat Player allows users to compose songs by using 4 variants of three instruments. The whole expierence is complemented with CRT-TV-like images and low-quality resources. Currently working on a recording feature to allow users to save their masterpieces!
 
-This template should help get you started developing with Vue 3 in Vite.
+### Tools :wrench:
+* [VueJS](https://vuejs.org/) - An approachable, performant and versatile JavaScript framework for building web user interfaces.
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+##  :warning: THIS PROJECT IS A WORK IN PROGRESS :warning: #
