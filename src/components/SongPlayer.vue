@@ -1,7 +1,7 @@
 <template>
     <div>
         <section id="ctn_header">
-            <h2 class="contentSize">Don't forget to press play to record your session!</h2>
+            <h3 class="contentSize">Don't forget to press play to record your session!</h3>
         </section>
 
         <section id="ctn_video">
@@ -15,7 +15,7 @@
             <img draggable="false" src="../assets/playingGuitarist.png" v-if="instruments.guitar.isActive" class="video_musician">
             <img draggable="false" v-else src="../assets/staticGuitarist.png" class="video_musician">
 
-            <img draggable="false" src="../assets/playingSinger.png" v-if="instruments.singer.isActive" class="video_musician">
+            <img draggable="false" src="../assets/playingSinger.gif" v-if="instruments.singer.isActive" class="video_musician">
             <img draggable="false" v-else src="../assets/staticSinger.png" class="video_musician">
         </section>
         
@@ -153,6 +153,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     @import url('../assets/songPlayer.css');
 </style>

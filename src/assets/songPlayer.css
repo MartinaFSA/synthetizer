@@ -1,15 +1,14 @@
-body {
-    background-color: black;
-    color:rgb(247, 245, 238);
+section {
     font-family: "VT323", monospace;
     font-weight: 400;
     font-style: normal;
+    color:rgb(247, 245, 238);
 }
 button {
     background-color: unset;
     color: white;
 }
-h2 {
+h3 {
     font-size: 2em;
     margin: 3vh 0px;
     text-align: center;

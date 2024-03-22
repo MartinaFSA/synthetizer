@@ -6,6 +6,9 @@ body {
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
+  padding: 0px;
+  margin: 0px;
+  background-color: black;
 }
 
 .row {
