@@ -9,7 +9,7 @@
             <img src="../assets/musicStudio.png" alt="" draggable="false" class="video_musician" id="video_background">
 
             <!--Musicians playing are png gifs and static ones are a png img-->
-            <img v-if="instruments.drums.isActive" src="../assets/playingBatterist.png" alt="" draggable="false" class="video_musician screen_light">
+            <img v-if="instruments.drums.isActive" src="../assets/playingBatterist.gif" alt="" draggable="false" class="video_musician screen_light">
             <img v-else src="../assets/staticBatterist.png" alt="" draggable="false" class="video_musician screen_light">
 
             <img src="../assets/playingGuitarist.gif" alt="" draggable="false" v-if="instruments.guitar.isActive" class="video_musician">
@@ -179,5 +179,5 @@ export default {
 </script>
 
 <style scoped>
-    @import url('../assets/songPlayer.css');
+    @import url('../assets/styles/songPlayer.css');
 </style>

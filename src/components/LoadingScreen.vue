@@ -25,5 +25,5 @@
 
 <style scoped>
     @import url('https://fonts.googleapis.com/css2?family=Birthstone&display=swap');
-    @import url('../assets/loadingScreen.css');
+    @import url('../assets/styles/loadingScreen.css');
 </style>
