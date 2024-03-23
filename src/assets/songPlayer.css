@@ -101,7 +101,7 @@ h3 {
 	}
 }
 
-/*Screen adaptability*/
+/*Responsive*/
 @media only screen and (max-width: 1007px) {
     #pageContainer {
         padding: 0px 10px;

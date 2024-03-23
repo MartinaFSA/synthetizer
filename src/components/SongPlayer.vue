@@ -6,17 +6,17 @@
 
         <section id="ctn_video">
             <!--Background is a static img-->
-            <img draggable="false" src="../assets/musicStudio.png" class="video_musician" id="video_background">
+            <img src="../assets/musicStudio.png" alt="" draggable="false" class="video_musician" id="video_background">
 
             <!--Musicians playing are png gifs and static ones are a png img-->
-            <img draggable="false" v-if="instruments.drums.isActive" src="../assets/playingBatterist.png" class="video_musician screen_light">
-            <img draggable="false" v-else src="../assets/staticBatterist.png" class="video_musician screen_light">
+            <img v-if="instruments.drums.isActive" src="../assets/playingBatterist.png" alt="" draggable="false" class="video_musician screen_light">
+            <img v-else src="../assets/staticBatterist.png" alt="" draggable="false" class="video_musician screen_light">
 
-            <img draggable="false" src="../assets/playingGuitarist.gif" v-if="instruments.guitar.isActive" class="video_musician">
-            <img draggable="false" v-else src="../assets/staticGuitarist.png" class="video_musician">
+            <img src="../assets/playingGuitarist.gif" alt="" draggable="false" v-if="instruments.guitar.isActive" class="video_musician">
+            <img v-else src="../assets/staticGuitarist.png" alt="" draggable="false" class="video_musician">
 
-            <img draggable="false" src="../assets/playingSinger.gif" v-if="instruments.singer.isActive" class="video_musician">
-            <img draggable="false" v-else src="../assets/staticSinger.png" class="video_musician">
+            <img src="../assets/playingSinger.gif" alt="" draggable="false" v-if="instruments.singer.isActive" class="video_musician">
+            <img v-else src="../assets/staticSinger.png" alt="" draggable="false" class="video_musician">
         </section>
         
         <section id="ctn_btn">
@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div>
-                    <a class="actAsButton" @click="recordController()">
+                    <a class="actAsButton" @click="recordController()" tabindex="0">
                         <img draggable="false" v-if="isRecording" src="../assets/stopIcon.png" alt="Stop recording" aria-label="Press to stop recording">
                         <img draggable="false" v-else src="../assets/startIcon.png" alt="Start recording" aria-label="Press to start recording">
                     </a>
@@ -51,9 +51,9 @@ import drums3 from '../assets/audios/drums3.mp3';
 import drums4 from '../assets/audios/drums4.mp3';*/
 
 import guitar1 from '../assets/audios/guitar1.ogg';
-/*import guitar2 from '../assets/audios/guitar2.mp3';
-import guitar3 from '../assets/audios/guitar3.mp3';
-import guitar4 from '../assets/audios/guitar4.mp3';*/
+/*import guitar2 from '../assets/audios/guitar2.ogg';
+import guitar3 from '../assets/audios/guitar3.ogg';
+import guitar4 from '../assets/audios/guitar4.ogg';*/
 
 import singer1 from '../assets/audios/singer1.ogg';
 /*import singer2 from '../assets/audios/singer2.mp3';
@@ -95,15 +95,10 @@ export default {
     },
     methods: {
         async recordController() {
-            console.log(MediaRecorder.isTypeSupported("video/webm"));
-            console.log(MediaRecorder.isTypeSupported("video/mp4"));
-            console.log(MediaRecorder.isTypeSupported("video/mp4;codecs=avc1"));
-
             if (!this.isRecording) {
-                //start recording
-                console.log('recording');
+                //Start recording
                 var stream =  await navigator.mediaDevices.getDisplayMedia(
-                    {video: {mediaSource: "tab"}, audio: true}
+                    {video: true, audio: true}
                 );
 
                 this.deviceRecorder = new MediaRecorder(stream, {mimeType: "video/webm"});
@@ -113,29 +108,26 @@ export default {
                         this.chunks.push(e.data);
                     }
                 }
-                this.deviceRecorder.onstop = () => {
-                    this.chunks = [];
-                }
-                this.deviceRecorder.start(250)
+        
+                this.deviceRecorder.start(250);
                 this.isRecording = true;
             }
             else {
-                //stop recording
-                console.log('stopped recording');
-                var filename = window.prompt("File name", "video"); // Ask the file name
+                //Stop recording
+                var filename = window.prompt("How should your video be named?", "My amazing beats");
 
-                this.deviceRecorder.stop(); // Stopping the recording
+                this.deviceRecorder.stop();
                 this.blob = new Blob(this.chunks, {type: "video/webm"})
-                this.chunks = [] // Resetting the data chunks
+                this.chunks = []
                 var dataDownloadUrl = URL.createObjectURL(this.blob);
 
-                // Downloadin it onto the user's device
                 let a = document.createElement('a')
                 a.href = dataDownloadUrl;
                 a.download = `${filename}.webm`
                 a.click()
     
                 URL.revokeObjectURL(dataDownloadUrl);
+                
                 this.isRecording = false;
 
             }
@@ -154,7 +146,7 @@ export default {
                 element.target.classList.add('selected');
             }
 
-            //if there is at least one active audio, keep the video on
+            //If there is at least one active audio, keep the video on
             let isThereActiveAudios = false;
 
             for (var i = 0; i < instrument.audios.length; i++) {
@@ -175,16 +167,7 @@ export default {
             audio.setAttribute("id", selectedAudio.id);
             audio.loop = true;
 
-            var playPromise = audio.play();
-            if (playPromise !== undefined) {
-                playPromise.then(function() {
-                    console.log('playing')
-                }).catch(function(error) {
-                    console.log('error: ' + error)
-                    // Automatic playback failed.
-                    // Show a UI element to let the user manually start playback.
-                });
-            }
+            audio.play();
         },
         stopPlaying(selectedAudio) {
             const audio = document.getElementById(selectedAudio.id);
