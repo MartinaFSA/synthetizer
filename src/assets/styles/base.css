@@ -1,7 +1,10 @@
 :root {
   --vt-c-white: #ffffff;
 }
-
+html {
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+}
 body {    
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */

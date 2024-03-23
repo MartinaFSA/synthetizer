@@ -26,12 +26,12 @@
                     <div v-for="(instrument, index) in instruments" v-bind:key="index">
                         <img draggable="false" :src="'/'+instrument.name+'Icon.png'" :alt=instrument.name>
                         <div class="beatSelector spaceEvenly">
-                            <button v-for="(audio, index) in instrument.audios" v-bind:key="index" class="beatSelector" @click="selectInstrumentBeat(instrument, audio, $event)" aria-label="Press to play">{{ index }} </button>
+                            <button v-for="(audio, index) in instrument.audios" v-bind:key="index" class="beatSelector" @click="selectInstrumentBeat(instrument, audio, $event)" @touchstart="selectInstrumentBeat(instrument, audio, $event)" aria-label="Press to play">{{ index }} </button>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <a class="actAsButton" @click="recordController()" tabindex="0">
+                    <a class="actAsButton" tabindex="0" @click="recordController()" @touchstart="recordController($event)">
                         <img draggable="false" v-if="isRecording" src="../assets/stopIcon.png" alt="Stop recording" aria-label="Press to stop recording">
                         <img draggable="false" v-else src="../assets/startIcon.png" alt="Start recording" aria-label="Press to start recording">
                     </a>
@@ -46,19 +46,19 @@
 import instrumentsJson from '../assets/instruments.json'
 
 import drums1 from '../assets/audios/drums1.ogg';
-/*import drums2 from '../assets/audios/drums2.mp3';
-import drums3 from '../assets/audios/drums3.mp3';
-import drums4 from '../assets/audios/drums4.mp3';*/
+import drums2 from '../assets/audios/drums2.ogg';
+import drums3 from '../assets/audios/drums3.ogg';
+import drums4 from '../assets/audios/drums4.ogg';
 
 import guitar1 from '../assets/audios/guitar1.ogg';
-/*import guitar2 from '../assets/audios/guitar2.ogg';
-import guitar3 from '../assets/audios/guitar3.ogg';
-import guitar4 from '../assets/audios/guitar4.ogg';*/
+import guitar2 from '../assets/audios/guitar2.ogg';
+import guitar3 from '../assets/audios/guitar3.mp3';
+import guitar4 from '../assets/audios/guitar4.ogg';
 
 import singer1 from '../assets/audios/singer1.ogg';
-/*import singer2 from '../assets/audios/singer2.mp3';
-import singer3 from '../assets/audios/singer3.mp3';
-import singer4 from '../assets/audios/singer4.mp3';*/
+import singer2 from '../assets/audios/singer2.ogg';
+import singer3 from '../assets/audios/singer3.ogg';
+import singer4 from '../assets/audios/singer4.ogg';
 
 export default {
     data() {
@@ -77,22 +77,23 @@ export default {
         setTimeout(() => this.isLoading = false, 5500);
         
         this.instruments.drums.audios[0].fileName = drums1;
-        /*this.instruments.drums.audios[1].fileName = drums2;
+        this.instruments.drums.audios[1].fileName = drums2;
         this.instruments.drums.audios[2].fileName = drums3;
-        this.instruments.drums.audios[3].fileName = drums4;*/
+        this.instruments.drums.audios[3].fileName = drums4;
 
         this.instruments.guitar.audios[0].fileName = guitar1;
-        /*this.instruments.guitar.audios[1].fileName = guitar2;
+        this.instruments.guitar.audios[1].fileName = guitar2;
         this.instruments.guitar.audios[2].fileName = guitar3;
-        this.instruments.guitar.audios[3].fileName = guitar4;*/
+        this.instruments.guitar.audios[3].fileName = guitar4;
 
         this.instruments.singer.audios[0].fileName = singer1;
-        /*this.instruments.singer.audios[1].fileName = singer2;
+        this.instruments.singer.audios[1].fileName = singer2;
         this.instruments.singer.audios[2].fileName = singer3;
-        this.instruments.singer.audios[3].fileName = singer4;*/
+        this.instruments.singer.audios[3].fileName = singer4;
     },
     methods: {
-        async recordController() {
+        async recordController(e) {
+            e.preventDefault();
             if (!this.isRecording) {
                 //Start recording
                 var stream =  await navigator.mediaDevices.getDisplayMedia(
@@ -131,17 +132,18 @@ export default {
             }
         },
         selectInstrumentBeat(instrument, selectedAudio, element) {
+            element.preventDefault();
             if(selectedAudio.isActive) {
                 this.stopPlaying(selectedAudio);
-                selectedAudio.isActive = false;
                 element.target.classList.remove('selected');
                 element.target.classList.add('unselected');
+                selectedAudio.isActive = false;
             }
             else {
                 this.startPlaying(selectedAudio);
-                selectedAudio.isActive = true;
                 element.target.classList.remove('unselected');
                 element.target.classList.add('selected');
+                selectedAudio.isActive = true;
             }
 
             //If there is at least one active audio, keep the video on
