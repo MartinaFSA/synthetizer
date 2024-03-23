@@ -9,7 +9,7 @@ button {
     color: white;
 }
 h3 {
-    font-size: 2em;
+    font-size: clamp(1rem, 1.8rem, 2.3rem);
     margin: 3vh 0px;
     text-align: center;
     line-height: 1em;
@@ -19,6 +19,7 @@ h3 {
     display: grid;
     align-items: center;
     justify-content: center;
+    justify-items: center;
     width: 100%;
     margin: 3vh auto;
 }
@@ -46,10 +47,18 @@ h3 {
     border: none;
     padding: 2.5px;
     cursor: pointer;
-    font-size: 1.5em;
     font-family: "VT323", monospace;
+} #ctn_btn button:hover {
+    color: black;
+    background-color: white;
+} #ctn_btn > div {
+    width: 100%;
+    align-items: center;
+} #ctn_btn button {
+    font-size: clamp(0.8rem, 1.3rem, 1.8rem);
+}
 
-} .unselected {
+.unselected {
     background-color: transparent;
     color: white;
 
@@ -93,35 +102,38 @@ h3 {
 }
 
 /*Screen adaptability*/
+@media only screen and (max-width: 1007px) {
+    #pageContainer {
+        padding: 0px 10px;
+    }
+    .contentSize, .video_musician {
+        width: 100%;
+    }
+}
 @media only screen and (max-width: 800px) {
-    .contentSize, .video_musician {
-        width: 90vw;
+    #ctn_btn img {
+        width: 100%;
     }
 }
-@media only screen and (min-width: 801px) and (max-width: 1515px) {
-    .contentSize, .video_musician {
-        width: 65vw;
+@media only screen and (min-width: 801px) and (max-width: 1007px) {
+    #ctn_btn img {
+        width: 80%;
     }
 }
-@media only screen and (min-width: 1516px) {
-    .contentSize, .video_musician {
-        width: 55vw;
+@media only screen and (min-width: 1008px) {
+    #pageContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    #ctn_video, .video_musician {
+        height: 60vh;
+    }
+    #ctn_btn {
+        width: calc(60vh * 1.77); /*the aspect ratio of the images is 16:9, divide the height by aspect ratio to obtain width **/
     }
     #ctn_btn img {
-        max-width: 150px;
-        width: 8vw;
-    }
-}
-
-@media only screen and (max-width: 560px) {
-    #ctn_btn img {
-        min-width: 60px;
-        width: 20vw;
-    }
-}
-@media only screen and (min-width: 561px) and (max-width: 1515px)  {
-    #ctn_btn img {
-        min-width: 100px;
-        width: 9vw;
+        max-height: 70%;
     }
 }

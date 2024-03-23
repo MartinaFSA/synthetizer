@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div v-show="!isLoading" id="pageContainer">
         <section id="ctn_header">
-            <h3 class="contentSize">Don't forget to press play to record your session!</h3>
+            <h3>Don't forget to press play to record your session!</h3>
         </section>
 
         <section id="ctn_video">
@@ -12,7 +12,7 @@
             <img draggable="false" v-if="instruments.drums.isActive" src="../assets/playingBatterist.png" class="video_musician screen_light">
             <img draggable="false" v-else src="../assets/staticBatterist.png" class="video_musician screen_light">
 
-            <img draggable="false" src="../assets/playingGuitarist.png" v-if="instruments.guitar.isActive" class="video_musician">
+            <img draggable="false" src="../assets/playingGuitarist.gif" v-if="instruments.guitar.isActive" class="video_musician">
             <img draggable="false" v-else src="../assets/staticGuitarist.png" class="video_musician">
 
             <img draggable="false" src="../assets/playingSinger.gif" v-if="instruments.singer.isActive" class="video_musician">
@@ -20,7 +20,7 @@
         </section>
         
         <section id="ctn_btn">
-            <div class="spaceBetween contentSize">
+            <div class="spaceBetween">
                 <div class="spaceEvenly">
                     <!--Instruments-->
                     <div v-for="(instrument, index) in instruments" v-bind:key="index">
@@ -31,9 +31,9 @@
                     </div>
                 </div>
                 <div>
-                    <a class="actAsButton" @click="recordController(isRecording)">
-                        <img draggable="false" v-if="isRecording" src="../assets/stopIcon.png" alt="Start recording" aria-label="Press to start recording">
-                        <img draggable="false" v-else src="../assets/startIcon.png" alt="Stop recording" aria-label="Press to stop recording">
+                    <a class="actAsButton" @click="recordController()">
+                        <img draggable="false" v-if="isRecording" src="../assets/stopIcon.png" alt="Stop recording" aria-label="Press to stop recording">
+                        <img draggable="false" v-else src="../assets/startIcon.png" alt="Start recording" aria-label="Press to start recording">
                     </a>
                 </div>
             </div>
@@ -65,12 +65,18 @@ import singer4 from '../assets/audios/singer4.mp3';*/
 export default {
     data() {
         return {
+            isLoading: true,
             isRecording: false,
-            instruments: ['empty']
+            instruments: ['empty'],
+            blob: null, 
+            deviceRecorder: null,
+            chunks: [],
         }
     },
     created() {
         this.instruments = instrumentsJson;
+        
+        setTimeout(() => this.isLoading = false, 5500);
         
         this.instruments.drums.audios[0].fileName = drums1;
         /*this.instruments.drums.audios[1].fileName = drums2;
@@ -88,14 +94,50 @@ export default {
         this.instruments.singer.audios[3].fileName = singer4;*/
     },
     methods: {
-        recordController(isRecording) {
-            if (isRecording) {
+        async recordController() {
+            console.log(MediaRecorder.isTypeSupported("video/webm"));
+            console.log(MediaRecorder.isTypeSupported("video/mp4"));
+            console.log(MediaRecorder.isTypeSupported("video/mp4;codecs=avc1"));
+
+            if (!this.isRecording) {
                 //start recording
-                this.isRecording = false
+                console.log('recording');
+                var stream =  await navigator.mediaDevices.getDisplayMedia(
+                    {video: {mediaSource: "tab"}, audio: true}
+                );
+
+                this.deviceRecorder = new MediaRecorder(stream, {mimeType: "video/webm"});
+
+                this.deviceRecorder.ondataavailable = (e) => {
+                    if(e.data.size > 0){
+                        this.chunks.push(e.data);
+                    }
+                }
+                this.deviceRecorder.onstop = () => {
+                    this.chunks = [];
+                }
+                this.deviceRecorder.start(250)
+                this.isRecording = true;
             }
             else {
                 //stop recording
-                this.isRecording = true
+                console.log('stopped recording');
+                var filename = window.prompt("File name", "video"); // Ask the file name
+
+                this.deviceRecorder.stop(); // Stopping the recording
+                this.blob = new Blob(this.chunks, {type: "video/webm"})
+                this.chunks = [] // Resetting the data chunks
+                var dataDownloadUrl = URL.createObjectURL(this.blob);
+
+                // Downloadin it onto the user's device
+                let a = document.createElement('a')
+                a.href = dataDownloadUrl;
+                a.download = `${filename}.webm`
+                a.click()
+    
+                URL.revokeObjectURL(dataDownloadUrl);
+                this.isRecording = false;
+
             }
         },
         selectInstrumentBeat(instrument, selectedAudio, element) {
