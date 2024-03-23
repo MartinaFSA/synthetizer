@@ -24,7 +24,7 @@
                 <div class="spaceEvenly">
                     <!--Instruments-->
                     <div v-for="(instrument, index) in instruments" v-bind:key="index">
-                        <img draggable="false" :src="getImage(instrument.name)" :alt=instrument.name>
+                        <img draggable="false" :src="'/'+instrument.name+'Icon.png'" :alt=instrument.name>
                         <div class="beatSelector spaceEvenly">
                             <button v-for="(audio, index) in instrument.audios" v-bind:key="index" class="beatSelector" @click="selectInstrumentBeat(instrument, audio, $event)" aria-label="Press to play">{{ index }} </button>
                         </div>
@@ -59,10 +59,6 @@ import singer1 from '../assets/audios/singer1.ogg';
 /*import singer2 from '../assets/audios/singer2.mp3';
 import singer3 from '../assets/audios/singer3.mp3';
 import singer4 from '../assets/audios/singer4.mp3';*/
-
-import singerIcon from '@/assets/singerIcon.png';
-import guitarIcon from '@/assets/guitarIcon.png';
-import drumsIcon from '@/assets/drumsIcon.png';
 
 export default {
     data() {
@@ -133,9 +129,6 @@ export default {
                 this.isRecording = false;
 
             }
-        },
-        getImage(instrumentName) {  
-            return '/src/assets/'+instrumentName+'Icon.png'  
         },
         selectInstrumentBeat(instrument, selectedAudio, element) {
             if(selectedAudio.isActive) {
