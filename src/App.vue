@@ -2,12 +2,12 @@
 import TheWelcome from './components/TheWelcome.vue'
 import { initializeApp } from "firebase/app";
 const firebaseConfig = {
-  apiKey: "AIzaSyCA1VqzliAe4H_JV7mWyub0GfkziB-kd6s",
-  authDomain: "synthetizer-9dd5e.firebaseapp.com",
-  projectId: "synthetizer-9dd5e",
-  storageBucket: "synthetizer-9dd5e.appspot.com",
-  messagingSenderId: "162139151784",
-  appId: "1:162139151784:web:9bc3cd007f64614104119d"
+  apiKey: import.meta.env.VUE_APIKEY,
+  authDomain: import.meta.env.VUE_AUTHDOMAIN,
+  projectId: import.meta.env.VUE_PROJECTID,
+  storageBucket: import.meta.env.VUE_STORAGEBUCKET,
+  messagingSenderId: import.meta.env.VUE_MESSAGESENDERID,
+  appId: import.meta.env.VUE_APPID
 };
 
 const app = initializeApp(firebaseConfig);

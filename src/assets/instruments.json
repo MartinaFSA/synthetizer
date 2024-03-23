@@ -7,6 +7,7 @@
             {"isActive": false, "fileName": "", "id":"drums3"},
             {"isActive": false, "fileName": "", "id":"drums4"}
         ],
+        "icon": "drumsIcon",
         "isActive": false
     },
     "guitar": {
@@ -17,6 +18,7 @@
             {"isActive": false, "fileName": "", "id":"guitar3"},
             {"isActive": false, "fileName": "", "id":"guitar4"}
         ],
+        "icon": "guitarIcon",
         "isActive": false
     },
     "singer": {
@@ -27,6 +29,7 @@
             {"isActive": false, "fileName": "", "id":"singer3"},
             {"isActive": false, "fileName": "", "id":"singer4"}
         ],
+        "icon": "singerIcon",
         "isActive": false
     }
 }
