@@ -31,13 +31,18 @@
                     </div>
                 </div>
                 <div>
-                    <a class="actAsButton" tabindex="0" @click="recordController()" @touchstart="recordController($event)">
+                    <a class="actAsButton" tabindex="0" @click="recordController($event)" @touchstart="recordController($event)">
                         <img draggable="false" v-if="isRecording" src="../assets/stopIcon.png" alt="Stop recording" aria-label="Press to stop recording">
                         <img draggable="false" v-else src="../assets/startIcon.png" alt="Start recording" aria-label="Press to start recording">
                     </a>
                 </div>
             </div>
         </section>
+
+        <div v-show="showFlag" class="errorFlag">
+            <p>Oh no! Currently, the recording functionality is only available for desktop devices</p>
+            <button @click="hideFlag()">x</button>
+        </div>
     </div>
 
 </template>
@@ -69,6 +74,7 @@ export default {
             blob: null, 
             deviceRecorder: null,
             chunks: [],
+            showFlag: false
         }
     },
     created() {
@@ -94,6 +100,11 @@ export default {
     methods: {
         async recordController(e) {
             e.preventDefault();
+            if(this.getDeviceType() != 'desktop') {
+                this.showFlag = true;
+                return;
+            };
+
             if (!this.isRecording) {
                 //Start recording
                 var stream =  await navigator.mediaDevices.getDisplayMedia(
@@ -130,6 +141,23 @@ export default {
                 this.isRecording = false;
 
             }
+        },
+        getDeviceType () {
+            const ua = navigator.userAgent;
+            if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+                return "tablet";
+            }
+            if (
+                /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(
+                ua
+                )
+            ) {
+                return "mobile";
+            }
+            return "desktop";
+        },
+        hideFlag() {
+            this.showFlag = false;
         },
         selectInstrumentBeat(instrument, selectedAudio, element) {
             element.preventDefault();

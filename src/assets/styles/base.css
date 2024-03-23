@@ -30,3 +30,12 @@ body {
 .hidden {
   display: none;
 }
+.errorFlag {
+  width: 100%;
+  max-width: 300px;
+  background-color: rgba(136, 48, 48, 0.993);
+  color: #ffffff;
+  text-align: center;
+} .errorFlag > p {
+  padding: 5px 10px;
+}

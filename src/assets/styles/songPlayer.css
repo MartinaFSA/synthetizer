@@ -76,6 +76,15 @@ h3 {
     width: 80%;
 }
 
+.errorFlag {
+    display: flex;
+    justify-content: center;
+    float: inline-end;
+}
+.errorFlag > button, .errorFlag {
+    font-family: "VT323", monospace;
+}
+
 /*Animations*/
 @keyframes fadeIn {
 	0% {
